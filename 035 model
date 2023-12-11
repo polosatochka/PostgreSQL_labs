@@ -1,0 +1,3846 @@
+create table animal (
+  num_astronaut int not null,
+  year_birthday numeric(4),
+  name varchar(40)
+);
+alter table animal add primary key (num_astronaut);
+create table assignee (
+  num_country int not null,
+  date_change_name date not null,
+  name_country varchar(40)
+);
+alter table assignee add primary key (num_country, date_change_name);
+create table astronaut (
+  num_astronaut int not null,
+  num_species int not null,
+  sex char(1)
+);
+alter table astronaut add primary key (num_astronaut);
+create table carrier_rocket (
+  num_carrier_rocket int not null,
+  num_country int,
+  name_carrier_rocket varchar(30),
+  stages int,
+  fully_loaded float8
+);
+alter table carrier_rocket add primary key (num_carrier_rocket);
+create table cosmodrome (
+  num_cosmodrome int not null,
+  num_country int not null,
+  name_cosmodrom varchar(40),
+  longitude float8,
+  latitude float8,
+  satellite_inclination_min float8,
+  satellite_inclination_max float8,
+  year_open int,
+  comment text
+);
+alter table cosmodrome add primary key (num_cosmodrome);
+create table country (
+  num_country int not null,
+  short_name_country varchar(30)
+);
+alter table country add primary key (num_country);
+create table education (
+  num_education int not null,
+  num_astronaut int not null,
+  num_educational_institution int not null,
+  degree varchar(20),
+  date_get_degree date,
+  type_education char(2)
+);
+alter table education add primary key (num_education);
+create table educational_institution (
+  num_educational_institution int not null,
+  name_educational_institution varchar(40),
+  city_educational_institution varchar(30)
+);
+alter table educational_institution add primary key (num_educational_institution);
+create table heavenly_body (
+  num_heavenly_body int not null,
+  name_heavenly_body varchar(40),
+  satellite int
+);
+alter table heavenly_body add primary key (num_heavenly_body);
+create table history_space_vehicle (
+  num_history_space_vehicle int not null,
+  num_heavenly_body int,
+  num_space_vehicle int,
+  type_event int,
+  date_history_space_vehicle date,
+  time_history_space_vehicle time,
+  comment text
+);
+alter table history_space_vehicle add primary key (num_history_space_vehicle);
+create table people (
+  num_astronaut int not null,
+  num_country int,
+  birthday date,
+  name varchar(30),
+  family varchar(30),
+  patronymic varchar(40)
+);
+alter table people add primary key (num_astronaut);
+create table space_flight (
+  num_space_flight int not null,
+  num_space_vehicle int not null,
+  num_astronaut int not null,
+  num_status int not null,
+  flight_endurance float8
+);
+alter table space_flight add primary key (num_space_flight);
+create table space_vehicle (
+  num_space_vehicle int not null,
+  num_carrier_rocket int not null,
+  num_country int not null,
+  num_cosmodrome int not null,
+  num_type_space_flight int not null,
+  name_space_vehicle varchar(20),
+  sequence_number int,
+  international_designation varchar(20),
+  weight_space_vehicle float8
+);
+alter table space_vehicle add primary key (num_space_vehicle);
+create table species (
+  num_species int not null,
+  name_species varchar(30)
+);
+alter table species add primary key (num_species);
+create table status (
+  num_status int not null,
+  name_status varchar(30)
+);
+alter table status add primary key (num_status);
+create table type_event (
+  type_event int not null,
+  name_type_event varchar(60)
+);
+alter table type_event add primary key (type_event);
+create table type_space_flight (
+  num_type_space_flight int not null,
+  name_type_space_flight varchar(40)
+);
+alter table type_space_flight add primary key (num_type_space_flight);
+alter table animal add foreign key (num_astronaut) references astronaut;
+alter table assignee add foreign key (num_country) references country;
+alter table astronaut add foreign key (num_species) references species;
+alter table carrier_rocket add foreign key (num_country) references country;
+alter table cosmodrome add foreign key (num_country) references country;
+alter table education add foreign key (num_astronaut) references people;
+alter table education add foreign key (num_educational_institution) references educational_institution;
+alter table heavenly_body add foreign key (satellite) references heavenly_body;
+alter table history_space_vehicle add foreign key (num_heavenly_body) references heavenly_body;
+alter table history_space_vehicle add foreign key (num_space_vehicle) references space_vehicle;
+alter table history_space_vehicle add foreign key (type_event) references type_event;
+alter table people add foreign key (num_astronaut) references astronaut;
+alter table people add foreign key (num_country) references country;
+alter table space_flight add foreign key (num_status) references status;
+alter table space_flight add foreign key (num_astronaut) references astronaut;
+alter table space_flight add foreign key (num_space_vehicle) references space_vehicle;
+alter table space_vehicle add foreign key (num_carrier_rocket) references carrier_rocket;
+alter table space_vehicle add foreign key (num_country) references country;
+alter table space_vehicle add foreign key (num_cosmodrome) references cosmodrome;
+alter table space_vehicle add foreign key (num_type_space_flight) references type_space_flight;
+
+
+
+insert into COUNTRY (NUM_COUNTRY, SHORT_NAME_COUNTRY)
+values (
+  1, 
+  'Россия'
+);
+insert into COUNTRY (NUM_COUNTRY, SHORT_NAME_COUNTRY)
+values (
+  3, 
+  'США'
+);
+insert into COUNTRY (NUM_COUNTRY, SHORT_NAME_COUNTRY)
+values (
+  4, 
+  'Англия'
+);
+insert into COUNTRY (NUM_COUNTRY, SHORT_NAME_COUNTRY)
+values (
+  5, 
+  'Франция'
+);
+insert into COUNTRY (NUM_COUNTRY, SHORT_NAME_COUNTRY)
+values (
+  6, 
+  'Китай'
+);
+insert into COUNTRY (NUM_COUNTRY, SHORT_NAME_COUNTRY)
+values (
+  7, 
+  'Малазия'
+);
+insert into COUNTRY (NUM_COUNTRY, SHORT_NAME_COUNTRY)
+values (
+  8, 
+  'Италия'
+);
+insert into COUNTRY (NUM_COUNTRY, SHORT_NAME_COUNTRY)
+values (
+  9, 
+  'Саудовская Аравия'
+);
+insert into COUNTRY (NUM_COUNTRY, SHORT_NAME_COUNTRY)
+values (
+  10, 
+  'Иран'
+);
+insert into COUNTRY (NUM_COUNTRY, SHORT_NAME_COUNTRY)
+values (
+  11, 
+  'Люксембург'
+);
+insert into COUNTRY (NUM_COUNTRY, SHORT_NAME_COUNTRY)
+values (
+  12, 
+  'Япония'
+);
+insert into COUNTRY (NUM_COUNTRY, SHORT_NAME_COUNTRY)
+values (
+  14, 
+  'Индия'
+);
+insert into COUNTRY (NUM_COUNTRY, SHORT_NAME_COUNTRY)
+values (
+  15, 
+  'Израиль'
+);
+insert into COUNTRY (NUM_COUNTRY, SHORT_NAME_COUNTRY)
+values (
+  16, 
+  'КНДР'
+);
+insert into COUNTRY (NUM_COUNTRY, SHORT_NAME_COUNTRY)
+values (
+  17, 
+  'Бразилия'
+);
+insert into COUNTRY (NUM_COUNTRY, SHORT_NAME_COUNTRY)
+values (
+  18, 
+  'Австралия'
+);
+insert into COUNTRY (NUM_COUNTRY, SHORT_NAME_COUNTRY)
+values (
+  19, 
+  'ЕС'
+);
+
+insert into SPECIES (NUM_SPECIES, NAME_SPECIES)
+values (
+  1, 
+  'человек'
+);
+insert into SPECIES (NUM_SPECIES, NAME_SPECIES)
+values (
+  2, 
+  'собака'
+);
+insert into SPECIES (NUM_SPECIES, NAME_SPECIES)
+values (
+  3, 
+  'кошка'
+);
+insert into SPECIES (NUM_SPECIES, NAME_SPECIES)
+values (
+  4, 
+  'макака'
+);
+insert into SPECIES (NUM_SPECIES, NAME_SPECIES)
+values (
+  5, 
+  'мышь'
+);
+insert into SPECIES (NUM_SPECIES, NAME_SPECIES)
+values (
+  6, 
+  'крыса'
+);
+insert into SPECIES (NUM_SPECIES, NAME_SPECIES)
+values (
+  7, 
+  'тритон'
+);
+insert into SPECIES (NUM_SPECIES, NAME_SPECIES)
+values (
+  8, 
+  'гвинейская свинья'
+);
+insert into SPECIES (NUM_SPECIES, NAME_SPECIES)
+values (
+  9, 
+  'лягушка'
+);
+insert into SPECIES (NUM_SPECIES, NAME_SPECIES)
+values (
+  10, 
+  'черепаха'
+);
+insert into SPECIES (NUM_SPECIES, NAME_SPECIES)
+values (
+  11, 
+  'рыба'
+);
+insert into SPECIES (NUM_SPECIES, NAME_SPECIES)
+values (
+  12, 
+  'обезьяна'
+);
+insert into SPECIES (NUM_SPECIES, NAME_SPECIES)
+values (
+  13, 
+  'шимпанзе'
+);
+
+insert into ASTRONAUT (NUM_ASTRONAUT, NUM_SPECIES, SEX)
+values (
+  1, 
+  2, 
+  'М'
+);
+insert into ASTRONAUT (NUM_ASTRONAUT, NUM_SPECIES, SEX)
+values (
+  2, 
+  2, 
+  null
+);
+insert into ASTRONAUT (NUM_ASTRONAUT, NUM_SPECIES, SEX)
+values (
+  3, 
+  2, 
+  null
+);
+insert into ASTRONAUT (NUM_ASTRONAUT, NUM_SPECIES, SEX)
+values (
+  4, 
+  2, 
+  null
+);
+insert into ASTRONAUT (NUM_ASTRONAUT, NUM_SPECIES, SEX)
+values (
+  5, 
+  2, 
+  null
+);
+insert into ASTRONAUT (NUM_ASTRONAUT, NUM_SPECIES, SEX)
+values (
+  6, 
+  2, 
+  null
+);
+insert into ASTRONAUT (NUM_ASTRONAUT, NUM_SPECIES, SEX)
+values (
+  7, 
+  2, 
+  null
+);
+insert into ASTRONAUT (NUM_ASTRONAUT, NUM_SPECIES, SEX)
+values (
+  8, 
+  2, 
+  null
+);
+insert into ASTRONAUT (NUM_ASTRONAUT, NUM_SPECIES, SEX)
+values (
+  9, 
+  2, 
+  null
+);
+insert into ASTRONAUT (NUM_ASTRONAUT, NUM_SPECIES, SEX)
+values (
+  10, 
+  2, 
+  null
+);
+insert into ASTRONAUT (NUM_ASTRONAUT, NUM_SPECIES, SEX)
+values (
+  11, 
+  2, 
+  null
+);
+insert into ASTRONAUT (NUM_ASTRONAUT, NUM_SPECIES, SEX)
+values (
+  12, 
+  13, 
+  'М'
+);
+insert into ASTRONAUT (NUM_ASTRONAUT, NUM_SPECIES, SEX)
+values (
+  13, 
+  2, 
+  null
+);
+insert into ASTRONAUT (NUM_ASTRONAUT, NUM_SPECIES, SEX)
+values (
+  14, 
+  2, 
+  null
+);
+insert into ASTRONAUT (NUM_ASTRONAUT, NUM_SPECIES, SEX)
+values (
+  15, 
+  1, 
+  null
+);
+insert into ASTRONAUT (NUM_ASTRONAUT, NUM_SPECIES, SEX)
+values (
+  16, 
+  1, 
+  null
+);
+insert into ASTRONAUT (NUM_ASTRONAUT, NUM_SPECIES, SEX)
+values (
+  17, 
+  1, 
+  null
+);
+insert into ASTRONAUT (NUM_ASTRONAUT, NUM_SPECIES, SEX)
+values (
+  18, 
+  1, 
+  null
+);
+insert into ASTRONAUT (NUM_ASTRONAUT, NUM_SPECIES, SEX)
+values (
+  19, 
+  1, 
+  null
+);
+insert into ASTRONAUT (NUM_ASTRONAUT, NUM_SPECIES, SEX)
+values (
+  20, 
+  1, 
+  null
+);
+insert into ASTRONAUT (NUM_ASTRONAUT, NUM_SPECIES, SEX)
+values (
+  21, 
+  1, 
+  null
+);
+
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  1, 
+  1, 
+  'Союз-У', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  2, 
+  1, 
+  'Днепр-1', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  3, 
+  1, 
+  'Зенит-2', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  4, 
+  3, 
+  'Titan-23G (G-13)', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  5, 
+  5, 
+  'Ariane-5G (V130/L506)', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  6, 
+  3, 
+  'Space Shuttle', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  7, 
+  5, 
+  'Ariane-4.44P (V132)', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  8, 
+  1, 
+  'Протон-К (8К82К)', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  9, 
+  6, 
+  'Chang Zheng-4B', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  10, 
+  1, 
+  'Р-7 8К71ПС', 
+  3, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  11, 
+  3, 
+  'Vanguard', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  12, 
+  3, 
+  'Jupiter-C', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  13, 
+  5, 
+  'Diamant-A', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  16, 
+  3, 
+  'Scout B', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  14, 
+  12, 
+  'Lambda-4S', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  15, 
+  6, 
+  'Chang Zheng-1', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  17, 
+  4, 
+  'Black Arrow', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  18, 
+  14, 
+  'SLV-3', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  19, 
+  15, 
+  'Shaviyt / AUS-51', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  20, 
+  16, 
+  'Taepo Dong-1', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  21, 
+  17, 
+  'VLS', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  22, 
+  19, 
+  'Europa-1', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  23, 
+  19, 
+  'Redstone', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  24, 
+  1, 
+  'Союз 11А511', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  25, 
+  1, 
+  'Восток-Л 8К72', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  26, 
+  1, 
+  'Молния 8К78Л', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  27, 
+  1, 
+  'Протон-К/Д', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  28, 
+  1, 
+  'Восток 8К72', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  29, 
+  3, 
+  'Atlas-D', 
+  null, 
+  null
+);
+insert into CARRIER_ROCKET (
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NAME_CARRIER_ROCKET,
+  STAGES,
+  FULLY_LOADED
+)
+values (
+  30, 
+  1, 
+  'Восход 11А57', 
+  null, 
+  null
+);
+commit;
+insert into COSMODROME (
+  NUM_COSMODROME,
+  NUM_COUNTRY,
+  NAME_COSMODROM,
+  LONGITUDE,
+  LATITUDE,
+  SATELLITE_INCLINATION_MIN,
+  SATELLITE_INCLINATION_MAX,
+  YEAR_OPEN
+)
+values (
+  1, 
+  1, 
+  'Байконур', 
+  63.2999992370605, 
+  45.5999984741211, 
+  50, 
+  99, 
+  1957
+);
+insert into COSMODROME (
+  NUM_COSMODROME,
+  NUM_COUNTRY,
+  NAME_COSMODROM,
+  LONGITUDE,
+  LATITUDE,
+  SATELLITE_INCLINATION_MIN,
+  SATELLITE_INCLINATION_MAX,
+  YEAR_OPEN
+)
+values (
+  2, 
+  1, 
+  'Плесецк', 
+  40.2999992370605, 
+  62.7000007629395, 
+  62.4000015258789, 
+  98, 
+  1966
+);
+insert into COSMODROME (
+  NUM_COSMODROME,
+  NUM_COUNTRY,
+  NAME_COSMODROM,
+  LONGITUDE,
+  LATITUDE,
+  SATELLITE_INCLINATION_MIN,
+  SATELLITE_INCLINATION_MAX,
+  YEAR_OPEN
+)
+values (
+  3, 
+  3, 
+  'Vandenberg Air Force Base', 
+  34.5999984741211, 
+  120.5, 
+  51, 
+  145, 
+  1959
+);
+insert into COSMODROME (
+  NUM_COSMODROME,
+  NUM_COUNTRY,
+  NAME_COSMODROM,
+  LONGITUDE,
+  LATITUDE,
+  SATELLITE_INCLINATION_MIN,
+  SATELLITE_INCLINATION_MAX,
+  YEAR_OPEN
+)
+values (
+  6, 
+  6, 
+  'Центра космических запусков Тайюань', 
+  37.7999992370605, 
+  111.5, 
+  99, 
+  99, 
+  null
+);
+insert into COSMODROME (
+  NUM_COSMODROME,
+  NUM_COUNTRY,
+  NAME_COSMODROM,
+  LONGITUDE,
+  LATITUDE,
+  SATELLITE_INCLINATION_MIN,
+  SATELLITE_INCLINATION_MAX,
+  YEAR_OPEN
+)
+values (
+  4, 
+  5, 
+  'Куру во французкой Гайане', 
+  -52.7299995422363, 
+  5.19999980926514, 
+  5, 
+  100, 
+  1979
+);
+insert into COSMODROME (
+  NUM_COSMODROME,
+  NUM_COUNTRY,
+  NAME_COSMODROM,
+  LONGITUDE,
+  LATITUDE,
+  SATELLITE_INCLINATION_MIN,
+  SATELLITE_INCLINATION_MAX,
+  YEAR_OPEN
+)
+values (
+  5, 
+  3, 
+  'Kennedy Space Center', 
+  -80.5, 
+  28.3999996185303, 
+  28, 
+  57, 
+  1958
+);
+insert into COSMODROME (
+  NUM_COSMODROME,
+  NUM_COUNTRY,
+  NAME_COSMODROM,
+  LONGITUDE,
+  LATITUDE,
+  SATELLITE_INCLINATION_MIN,
+  SATELLITE_INCLINATION_MAX,
+  YEAR_OPEN
+)
+values (
+  7, 
+  5, 
+  'Hammaguria', 
+  -2.25, 
+  31.6700000762939, 
+  34, 
+  40, 
+  1967
+);
+insert into COSMODROME (
+  NUM_COSMODROME,
+  NUM_COUNTRY,
+  NAME_COSMODROM,
+  LONGITUDE,
+  LATITUDE,
+  SATELLITE_INCLINATION_MIN,
+  SATELLITE_INCLINATION_MAX,
+  YEAR_OPEN
+)
+values (
+  8, 
+  12, 
+  'Kagoshima', 
+  131.5, 
+  31.1499996185303, 
+  29, 
+  75, 
+  null
+);
+insert into COSMODROME (
+  NUM_COSMODROME,
+  NUM_COUNTRY,
+  NAME_COSMODROM,
+  LONGITUDE,
+  LATITUDE,
+  SATELLITE_INCLINATION_MIN,
+  SATELLITE_INCLINATION_MAX,
+  YEAR_OPEN
+)
+values (
+  9, 
+  6, 
+  'Jiuquan', 
+  100.300003051758, 
+  41.0999984741211, 
+  40, 
+  56, 
+  null
+);
+insert into COSMODROME (
+  NUM_COSMODROME,
+  NUM_COUNTRY,
+  NAME_COSMODROM,
+  LONGITUDE,
+  LATITUDE,
+  SATELLITE_INCLINATION_MIN,
+  SATELLITE_INCLINATION_MAX,
+  YEAR_OPEN
+)
+values (
+  10, 
+  8, 
+  'San Marco', 
+  40.2999992370605, 
+  2.98000001907349, 
+  2, 
+  3, 
+  1967
+);
+insert into COSMODROME (
+  NUM_COSMODROME,
+  NUM_COUNTRY,
+  NAME_COSMODROM,
+  LONGITUDE,
+  LATITUDE,
+  SATELLITE_INCLINATION_MIN,
+  SATELLITE_INCLINATION_MAX,
+  YEAR_OPEN
+)
+values (
+  11, 
+  18, 
+  'Woomera', 
+  136.800003051758, 
+  -31.1599998474121, 
+  82, 
+  84, 
+  1967
+);
+insert into COSMODROME (
+  NUM_COSMODROME,
+  NUM_COUNTRY,
+  NAME_COSMODROM,
+  LONGITUDE,
+  LATITUDE,
+  SATELLITE_INCLINATION_MIN,
+  SATELLITE_INCLINATION_MAX,
+  YEAR_OPEN
+)
+values (
+  12, 
+  14, 
+  'Sriharikota', 
+  80.25, 
+  13.789999961853, 
+  44, 
+  47, 
+  null
+);
+insert into COSMODROME (
+  NUM_COSMODROME,
+  NUM_COUNTRY,
+  NAME_COSMODROM,
+  LONGITUDE,
+  LATITUDE,
+  SATELLITE_INCLINATION_MIN,
+  SATELLITE_INCLINATION_MAX,
+  YEAR_OPEN
+)
+values (
+  13, 
+  15, 
+  'Palmachim', 
+  34.7000007629395, 
+  3.90000009536743, 
+  142, 
+  145, 
+  1988
+);
+insert into COSMODROME (
+  NUM_COSMODROME,
+  NUM_COUNTRY,
+  NAME_COSMODROM,
+  LONGITUDE,
+  LATITUDE,
+  SATELLITE_INCLINATION_MIN,
+  SATELLITE_INCLINATION_MAX,
+  YEAR_OPEN
+)
+values (
+  14, 
+  16, 
+  'Musudan', 
+  129.669998168945, 
+  40.8600006103516, 
+  null, 
+  null, 
+  null
+);
+insert into COSMODROME (
+  NUM_COSMODROME,
+  NUM_COUNTRY,
+  NAME_COSMODROM,
+  LONGITUDE,
+  LATITUDE,
+  SATELLITE_INCLINATION_MIN,
+  SATELLITE_INCLINATION_MAX,
+  YEAR_OPEN
+)
+values (
+  15, 
+  17, 
+  'Alcantara', 
+  -44.2299995422363, 
+  -2.17000007629395, 
+  2, 
+  100, 
+  null
+);
+
+insert into HEAVENLY_BODY (NUM_HEAVENLY_BODY, NAME_HEAVENLY_BODY, SATELLITE)
+values (
+  1, 
+  'солнце', 
+  null
+);
+insert into HEAVENLY_BODY (NUM_HEAVENLY_BODY, NAME_HEAVENLY_BODY, SATELLITE)
+values (
+  2, 
+  'земля', 
+  1
+);
+insert into HEAVENLY_BODY (NUM_HEAVENLY_BODY, NAME_HEAVENLY_BODY, SATELLITE)
+values (
+  3, 
+  'луна', 
+  2
+);
+insert into HEAVENLY_BODY (NUM_HEAVENLY_BODY, NAME_HEAVENLY_BODY, SATELLITE)
+values (
+  4, 
+  'юпитер', 
+  1
+);
+insert into HEAVENLY_BODY (NUM_HEAVENLY_BODY, NAME_HEAVENLY_BODY, SATELLITE)
+values (
+  5, 
+  'Ио', 
+  4
+);
+insert into HEAVENLY_BODY (NUM_HEAVENLY_BODY, NAME_HEAVENLY_BODY, SATELLITE)
+values (
+  6, 
+  'Европа', 
+  4
+);
+insert into HEAVENLY_BODY (NUM_HEAVENLY_BODY, NAME_HEAVENLY_BODY, SATELLITE)
+values (
+  7, 
+  'Ганимед', 
+  4
+);
+insert into HEAVENLY_BODY (NUM_HEAVENLY_BODY, NAME_HEAVENLY_BODY, SATELLITE)
+values (
+  8, 
+  'Каллисто', 
+  4
+);
+insert into HEAVENLY_BODY (NUM_HEAVENLY_BODY, NAME_HEAVENLY_BODY, SATELLITE)
+values (
+  9, 
+  'Сириус A1', 
+  null
+);
+insert into HEAVENLY_BODY (NUM_HEAVENLY_BODY, NAME_HEAVENLY_BODY, SATELLITE)
+values (
+  10, 
+  'Денеб', 
+  null
+);
+insert into HEAVENLY_BODY (NUM_HEAVENLY_BODY, NAME_HEAVENLY_BODY, SATELLITE)
+values (
+  11, 
+  'Сириус DA', 
+  9
+);
+insert into HEAVENLY_BODY (NUM_HEAVENLY_BODY, NAME_HEAVENLY_BODY, SATELLITE)
+values (
+  12, 
+  'J-#XXX', 
+  3
+);
+
+insert into PEOPLE (
+  NUM_ASTRONAUT,
+  NUM_COUNTRY,
+  BIRTHDAY,
+  NAME,
+  FAMILY,
+  PATRONYMIC
+)
+values (
+  15, 
+  3, 
+  '31-10-2049', 
+  'Терренсе', 
+  'УИЛКАТ', 
+  'Уэйд'
+);
+insert into PEOPLE (
+  NUM_ASTRONAUT,
+  NUM_COUNTRY,
+  BIRTHDAY,
+  NAME,
+  FAMILY,
+  PATRONYMIC
+)
+values (
+  16, 
+  3, 
+  '15-08-1959', 
+  'Скотт', 
+  'ОЛЬТМАН', 
+  'Даглас'
+);
+insert into PEOPLE (
+  NUM_ASTRONAUT,
+  NUM_COUNTRY,
+  BIRTHDAY,
+  NAME,
+  FAMILY,
+  PATRONYMIC
+)
+values (
+  17, 
+  3, 
+  '27-07-1961', 
+  'Дэниэль', 
+  'БЕРБЭНК', 
+  'Кристофер'
+);
+insert into PEOPLE (
+  NUM_ASTRONAUT,
+  NUM_COUNTRY,
+  BIRTHDAY,
+  NAME,
+  FAMILY,
+  PATRONYMIC
+)
+values (
+  18, 
+  3, 
+  '01-07-1963', 
+  'Эдвард', 
+  'ЛУ', 
+  'Цанг'
+);
+insert into PEOPLE (
+  NUM_ASTRONAUT,
+  NUM_COUNTRY,
+  BIRTHDAY,
+  NAME,
+  FAMILY,
+  PATRONYMIC
+)
+values (
+  19, 
+  3, 
+  '11-02-1961', 
+  'Ричард', 
+  'МАСТРАККИО', 
+  'Алан'
+);
+insert into PEOPLE (
+  NUM_ASTRONAUT,
+  NUM_COUNTRY,
+  BIRTHDAY,
+  NAME,
+  FAMILY,
+  PATRONYMIC
+)
+values (
+  20, 
+  1, 
+  '22-12-1961', 
+  'Юрий', 
+  'МАЛЕНЧЕНКО', 
+  'Иванович'
+);
+insert into PEOPLE (
+  NUM_ASTRONAUT,
+  NUM_COUNTRY,
+  BIRTHDAY,
+  NAME,
+  FAMILY,
+  PATRONYMIC
+)
+values (
+  21, 
+  1, 
+  '01-10-1950', 
+  'Борис', 
+  'МОРУКОВ', 
+  'Владимирович'
+);
+
+insert into STATUS (NUM_STATUS, NAME_STATUS)
+values (
+  1, 
+  'подопытный'
+);
+insert into STATUS (NUM_STATUS, NAME_STATUS)
+values (
+  2, 
+  'контрольное животное'
+);
+insert into STATUS (NUM_STATUS, NAME_STATUS)
+values (
+  3, 
+  'командир'
+);
+insert into STATUS (NUM_STATUS, NAME_STATUS)
+values (
+  4, 
+  'пилот'
+);
+insert into STATUS (NUM_STATUS, NAME_STATUS)
+values (
+  5, 
+  'специалист полета'
+);
+
+insert into TYPE_EVENT (TYPE_EVENT, NAME_TYPE_EVENT)
+values (
+  0, 
+  'старт'
+);
+insert into TYPE_EVENT (TYPE_EVENT, NAME_TYPE_EVENT)
+values (
+  1, 
+  'авария ракеты носителя'
+);
+insert into TYPE_EVENT (TYPE_EVENT, NAME_TYPE_EVENT)
+values (
+  2, 
+  'прекратил свое существование, войдя в плотные слои атмосферы'
+);
+insert into TYPE_EVENT (TYPE_EVENT, NAME_TYPE_EVENT)
+values (
+  3, 
+  'не подтверждения вывода на орбиту'
+);
+insert into TYPE_EVENT (TYPE_EVENT, NAME_TYPE_EVENT)
+values (
+  4, 
+  'вышел на расчетную орбиту'
+);
+insert into TYPE_EVENT (TYPE_EVENT, NAME_TYPE_EVENT)
+values (
+  5, 
+  'суборбитальный полет'
+);
+insert into TYPE_EVENT (TYPE_EVENT, NAME_TYPE_EVENT)
+values (
+  6, 
+  'запуск по суборбитальной траектории'
+);
+insert into TYPE_EVENT (TYPE_EVENT, NAME_TYPE_EVENT)
+values (
+  7, 
+  'мягкая посадка'
+);
+insert into TYPE_EVENT (TYPE_EVENT, NAME_TYPE_EVENT)
+values (
+  8, 
+  'выход на не расчетную орбуту'
+);
+insert into TYPE_EVENT (TYPE_EVENT, NAME_TYPE_EVENT)
+values (
+  9, 
+  'достижение поверхности/упала'
+);
+insert into TYPE_EVENT (TYPE_EVENT, NAME_TYPE_EVENT)
+values (
+  10, 
+  'затерялась в просторах космоса'
+);
+insert into TYPE_EVENT (TYPE_EVENT, NAME_TYPE_EVENT)
+values (
+  11, 
+  'разбилась'
+);
+insert into TYPE_EVENT (TYPE_EVENT, NAME_TYPE_EVENT)
+values (
+  13, 
+  'старт'
+);
+insert into TYPE_EVENT (TYPE_EVENT, NAME_TYPE_EVENT)
+values (
+  14, 
+  'сгорел при попытке посадки'
+);
+insert into TYPE_EVENT (TYPE_EVENT, NAME_TYPE_EVENT)
+values (
+  15, 
+  'приводнение'
+);
+
+insert into TYPE_SPACE_FLIGHT (NUM_TYPE_SPACE_FLIGHT, NAME_TYPE_SPACE_FLIGHT)
+values (
+  1, 
+  '"Янтарь 1КФТ" (изделие 11Ф660)/разведка'
+);
+insert into TYPE_SPACE_FLIGHT (NUM_TYPE_SPACE_FLIGHT, NAME_TYPE_SPACE_FLIGHT)
+values (
+  2, 
+  'спутник без типа'
+);
+insert into TYPE_SPACE_FLIGHT (NUM_TYPE_SPACE_FLIGHT, NAME_TYPE_SPACE_FLIGHT)
+values (
+  3, 
+  'Енисей /разведка'
+);
+insert into TYPE_SPACE_FLIGHT (NUM_TYPE_SPACE_FLIGHT, NAME_TYPE_SPACE_FLIGHT)
+values (
+  7, 
+  'дистанционное зондирования поверхности'
+);
+insert into TYPE_SPACE_FLIGHT (NUM_TYPE_SPACE_FLIGHT, NAME_TYPE_SPACE_FLIGHT)
+values (
+  4, 
+  'метеорологический спутник'
+);
+insert into TYPE_SPACE_FLIGHT (NUM_TYPE_SPACE_FLIGHT, NAME_TYPE_SPACE_FLIGHT)
+values (
+  5, 
+  'спутники связи'
+);
+insert into TYPE_SPACE_FLIGHT (NUM_TYPE_SPACE_FLIGHT, NAME_TYPE_SPACE_FLIGHT)
+values (
+  6, 
+  'Atlantis'
+);
+insert into TYPE_SPACE_FLIGHT (NUM_TYPE_SPACE_FLIGHT, NAME_TYPE_SPACE_FLIGHT)
+values (
+  8, 
+  'научный спутник для исследований магнито'
+);
+insert into TYPE_SPACE_FLIGHT (NUM_TYPE_SPACE_FLIGHT, NAME_TYPE_SPACE_FLIGHT)
+values (
+  9, 
+  'L-4S-5'
+);
+insert into TYPE_SPACE_FLIGHT (NUM_TYPE_SPACE_FLIGHT, NAME_TYPE_SPACE_FLIGHT)
+values (
+  10, 
+  'КА для исследования атмосферы и ионосфер'
+);
+insert into TYPE_SPACE_FLIGHT (NUM_TYPE_SPACE_FLIGHT, NAME_TYPE_SPACE_FLIGHT)
+values (
+  12, 
+  'без спутника'
+);
+insert into TYPE_SPACE_FLIGHT (NUM_TYPE_SPACE_FLIGHT, NAME_TYPE_SPACE_FLIGHT)
+values (
+  13, 
+  'Союз 7К-ОК разведывательный спутник'
+);
+insert into TYPE_SPACE_FLIGHT (NUM_TYPE_SPACE_FLIGHT, NAME_TYPE_SPACE_FLIGHT)
+values (
+  14, 
+  'автоматическая межпланетная станция'
+);
+insert into TYPE_SPACE_FLIGHT (NUM_TYPE_SPACE_FLIGHT, NAME_TYPE_SPACE_FLIGHT)
+values (
+  15, 
+  'АМС типа "Е-6"'
+);
+insert into TYPE_SPACE_FLIGHT (NUM_TYPE_SPACE_FLIGHT, NAME_TYPE_SPACE_FLIGHT)
+values (
+  17, 
+  'Восток-1'
+);
+insert into TYPE_SPACE_FLIGHT (NUM_TYPE_SPACE_FLIGHT, NAME_TYPE_SPACE_FLIGHT)
+values (
+  18, 
+  'Восток-3'
+);
+insert into TYPE_SPACE_FLIGHT (NUM_TYPE_SPACE_FLIGHT, NAME_TYPE_SPACE_FLIGHT)
+values (
+  19, 
+  'Mercury'
+);
+insert into TYPE_SPACE_FLIGHT (NUM_TYPE_SPACE_FLIGHT, NAME_TYPE_SPACE_FLIGHT)
+values (
+  20, 
+  'Восход-3КВ'
+);
+
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  5, 
+  2, 
+  8, 
+  1, 
+  2, 
+  'MegSat-1', 
+  26546, 
+  '2000 057B', 
+  54
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  3, 
+  1, 
+  1, 
+  1, 
+  1, 
+  'Космос-2373', 
+  26552, 
+  '2000 058А', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  4, 
+  2, 
+  7, 
+  1, 
+  2, 
+  'Tiungsat ["MY-Sat1"]', 
+  26545, 
+  '2000 057A', 
+  54
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  6, 
+  2, 
+  8, 
+  1, 
+  2, 
+  'UniSat', 
+  26457, 
+  '2000 057C', 
+  10
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  18, 
+  9, 
+  6, 
+  6, 
+  7, 
+  'Zi Yuan-2 ["ZY-2"]', 
+  26481, 
+  '2000 050A', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  7, 
+  2, 
+  9, 
+  1, 
+  2, 
+  'SaudiSat-1A', 
+  26548, 
+  '2000 057D', 
+  10
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  8, 
+  2, 
+  9, 
+  1, 
+  2, 
+  'SaudiSat-1B', 
+  26549, 
+  '2000 057E', 
+  10
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  19, 
+  10, 
+  1, 
+  1, 
+  2, 
+  'Первый советский ИСЗ', 
+  2, 
+  '1957 Альфа 2', 
+  84
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  22, 
+  12, 
+  3, 
+  5, 
+  2, 
+  'Explorer-1', 
+  4, 
+  '1958 Альфа1', 
+  5
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  20, 
+  10, 
+  1, 
+  1, 
+  2, 
+  'Второй советский ИСЗ', 
+  3, 
+  '1957 Бета 1', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  21, 
+  11, 
+  3, 
+  5, 
+  2, 
+  'Vanguard-1A', 
+  null, 
+  '1957 1206F', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  23, 
+  11, 
+  3, 
+  5, 
+  2, 
+  'Vanguard-1B', 
+  null, 
+  null, 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  10, 
+  3, 
+  1, 
+  1, 
+  3, 
+  'Космос-2372', 
+  26538, 
+  '2000 056А', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  11, 
+  4, 
+  3, 
+  3, 
+  4, 
+  'NOAA-16', 
+  26536, 
+  '2000 055А', 
+  2231.69995117188
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  12, 
+  5, 
+  11, 
+  4, 
+  5, 
+  'Astra-2B', 
+  26494, 
+  '2000 054А', 
+  3315
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  13, 
+  5, 
+  3, 
+  4, 
+  5, 
+  'GE-7', 
+  26495, 
+  '2000 054B', 
+  1935
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  14, 
+  6, 
+  3, 
+  5, 
+  6, 
+  'OV-104', 
+  26489, 
+  '2000 053А', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  15, 
+  7, 
+  5, 
+  4, 
+  5, 
+  'Eutelsat W1', 
+  26487, 
+  '2000 052A', 
+  1430
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  16, 
+  8, 
+  3, 
+  1, 
+  5, 
+  'Sirius-2', 
+  26483, 
+  '2000 051A', 
+  3800
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  24, 
+  12, 
+  3, 
+  5, 
+  8, 
+  'Explorer-3', 
+  6, 
+  '1958 Гамма1', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  27, 
+  15, 
+  6, 
+  9, 
+  2, 
+  'Dong Fang Hong-1', 
+  4382, 
+  '1970 034А', 
+  173
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  25, 
+  13, 
+  5, 
+  7, 
+  2, 
+  'Asterix-1', 
+  1778, 
+  '1965 096А', 
+  42
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  26, 
+  14, 
+  12, 
+  8, 
+  9, 
+  'Ohsumi', 
+  4330, 
+  '1970 011А', 
+  12
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  28, 
+  16, 
+  8, 
+  10, 
+  10, 
+  'San Marco-2', 
+  2761, 
+  '1967 038А', 
+  129
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  29, 
+  17, 
+  4, 
+  11, 
+  2, 
+  'Prospero', 
+  5580, 
+  '1971 093А', 
+  66
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  30, 
+  18, 
+  14, 
+  12, 
+  2, 
+  'Rohini-1B', 
+  11899, 
+  '1980 062А', 
+  40
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  31, 
+  19, 
+  15, 
+  13, 
+  2, 
+  'Offek-1', 
+  19519, 
+  '1988 087А', 
+  155
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  32, 
+  20, 
+  16, 
+  14, 
+  2, 
+  'Квангмайнсонг-1', 
+  null, 
+  null, 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  33, 
+  21, 
+  17, 
+  15, 
+  2, 
+  'SCD-2A', 
+  null, 
+  null, 
+  150
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  34, 
+  22, 
+  19, 
+  11, 
+  12, 
+  'испытательный полет', 
+  null, 
+  '1964 0605S', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  35, 
+  23, 
+  18, 
+  11, 
+  2, 
+  'Sparta-1', 
+  null, 
+  '1966 1128SF', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  36, 
+  24, 
+  1, 
+  1, 
+  13, 
+  'Космос-133', 
+  2601, 
+  '1966 107А', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  37, 
+  23, 
+  18, 
+  11, 
+  2, 
+  'WRESAT', 
+  3054, 
+  '1967 118А', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  38, 
+  25, 
+  1, 
+  1, 
+  14, 
+  'Луна-1', 
+  112, 
+  '1959 Мю1', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  39, 
+  25, 
+  1, 
+  1, 
+  14, 
+  'Луна-2', 
+  114, 
+  '1959 Хи1', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  40, 
+  26, 
+  1, 
+  1, 
+  15, 
+  'Луна-4С', 
+  522, 
+  '1963 001А', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  41, 
+  26, 
+  1, 
+  1, 
+  15, 
+  'Луна-4', 
+  566, 
+  '1963 008А', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  42, 
+  26, 
+  1, 
+  1, 
+  15, 
+  'Луна-5', 
+  1366, 
+  '1965 036А', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  43, 
+  26, 
+  1, 
+  1, 
+  15, 
+  'Луна-10', 
+  2126, 
+  '1966 027А', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  44, 
+  27, 
+  1, 
+  1, 
+  15, 
+  'Луна-16', 
+  4527, 
+  '1970 072А', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  45, 
+  28, 
+  1, 
+  1, 
+  17, 
+  'Корабль-спутник', 
+  null, 
+  '1960 0728F', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  46, 
+  28, 
+  1, 
+  1, 
+  17, 
+  'Второй корабль-спутн', 
+  55, 
+  '1960 Ламбда 1', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  47, 
+  28, 
+  1, 
+  1, 
+  17, 
+  'Третий корабль-спутн', 
+  65, 
+  '1960 Ро 1', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  48, 
+  28, 
+  1, 
+  1, 
+  17, 
+  'Корабль-спутник 4', 
+  null, 
+  '1960 1222F', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  49, 
+  28, 
+  1, 
+  1, 
+  18, 
+  'Четвертый корабль-сп', 
+  91, 
+  '1961 Тэта 1', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  50, 
+  28, 
+  1, 
+  1, 
+  18, 
+  'Пятый корабль-спутни', 
+  95, 
+  '1961 Йота 1', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  51, 
+  29, 
+  3, 
+  5, 
+  19, 
+  'Mercury MA-5', 
+  208, 
+  '1961 Альфа Йота 1', 
+  null
+);
+insert into SPACE_VEHICLE (
+  NUM_SPACE_VEHICLE,
+  NUM_CARRIER_ROCKET,
+  NUM_COUNTRY,
+  NUM_COSMODROME,
+  NUM_TYPE_SPACE_FLIGHT,
+  NAME_SPACE_VEHICLE,
+  SEQUENCE_NUMBER,
+  INTERNATIONAL_DESIGNATION,
+  WEIGHT_SPACE_VEHICLE
+)
+values (
+  52, 
+  30, 
+  1, 
+  1, 
+  20, 
+  'Космос-110', 
+  2070, 
+  '1966 015А', 
+  null
+);
+
+insert into ANIMAL (NUM_ASTRONAUT, YEAR_BIRTHDAY, NAME)
+values (
+  1, 
+  1955, 
+  'ЛАЙКА'
+);
+insert into ANIMAL (NUM_ASTRONAUT, YEAR_BIRTHDAY, NAME)
+values (
+  2, 
+  1956, 
+  'ЛИСИЧКА'
+);
+insert into ANIMAL (NUM_ASTRONAUT, YEAR_BIRTHDAY, NAME)
+values (
+  3, 
+  1956, 
+  'ЧАЙКА'
+);
+insert into ANIMAL (NUM_ASTRONAUT, YEAR_BIRTHDAY, NAME)
+values (
+  4, 
+  1957, 
+  'БЕЛКА'
+);
+insert into ANIMAL (NUM_ASTRONAUT, YEAR_BIRTHDAY, NAME)
+values (
+  5, 
+  1958, 
+  'СТРЕЛКА'
+);
+insert into ANIMAL (NUM_ASTRONAUT, YEAR_BIRTHDAY, NAME)
+values (
+  6, 
+  1956, 
+  'ПЧЕЛКА'
+);
+insert into ANIMAL (NUM_ASTRONAUT, YEAR_BIRTHDAY, NAME)
+values (
+  7, 
+  1965, 
+  'МУШКА'
+);
+insert into ANIMAL (NUM_ASTRONAUT, YEAR_BIRTHDAY, NAME)
+values (
+  8, 
+  1956, 
+  'ЖЕМЧУЖИНА'
+);
+insert into ANIMAL (NUM_ASTRONAUT, YEAR_BIRTHDAY, NAME)
+values (
+  9, 
+  1956, 
+  'ЖУЛЬКА'
+);
+insert into ANIMAL (NUM_ASTRONAUT, YEAR_BIRTHDAY, NAME)
+values (
+  10, 
+  1957, 
+  'ЧЕРНУШКА'
+);
+insert into ANIMAL (NUM_ASTRONAUT, YEAR_BIRTHDAY, NAME)
+values (
+  11, 
+  1957, 
+  'ЗВЕЗДОЧКА'
+);
+insert into ANIMAL (NUM_ASTRONAUT, YEAR_BIRTHDAY, NAME)
+values (
+  12, 
+  null, 
+  'Enos'
+);
+insert into ANIMAL (NUM_ASTRONAUT, YEAR_BIRTHDAY, NAME)
+values (
+  13, 
+  null, 
+  'ВЕТЕРОК'
+);
+insert into ANIMAL (NUM_ASTRONAUT, YEAR_BIRTHDAY, NAME)
+values (
+  14, 
+  null, 
+  'УГОЛЕК'
+);
+
+insert into ASSIGNEE (NUM_COUNTRY, DATE_CHANGE_NAME, NAME_COUNTRY)
+values (
+  1, 
+  '30-12-1922', 
+  'СССР'
+);
+insert into ASSIGNEE (NUM_COUNTRY, DATE_CHANGE_NAME, NAME_COUNTRY)
+values (
+  1, 
+  '17-03-1991', 
+  'Российская Федерация'
+);
+insert into ASSIGNEE (NUM_COUNTRY, DATE_CHANGE_NAME, NAME_COUNTRY)
+values (
+  3, 
+  '01-01-1776', 
+  'Соединенные Штаты Америки'
+);
+insert into ASSIGNEE (NUM_COUNTRY, DATE_CHANGE_NAME, NAME_COUNTRY)
+values (
+  4, 
+  '01-01-1066', 
+  'Великобритания'
+);
+insert into ASSIGNEE (NUM_COUNTRY, DATE_CHANGE_NAME, NAME_COUNTRY)
+values (
+  5, 
+  '01-01-1946', 
+  'Франция 4 республика'
+);
+insert into ASSIGNEE (NUM_COUNTRY, DATE_CHANGE_NAME, NAME_COUNTRY)
+values (
+  5, 
+  '01-01-1958', 
+  'Франция 5 республика'
+);
+insert into ASSIGNEE (NUM_COUNTRY, DATE_CHANGE_NAME, NAME_COUNTRY)
+values (
+  6, 
+  '01-10-1949', 
+  'Китайская Народная Республика'
+);
+insert into ASSIGNEE (NUM_COUNTRY, DATE_CHANGE_NAME, NAME_COUNTRY)
+values (
+  7, 
+  '01-01-1992', 
+  'Малазия'
+);
+insert into ASSIGNEE (NUM_COUNTRY, DATE_CHANGE_NAME, NAME_COUNTRY)
+values (
+  8, 
+  '01-01-1992', 
+  'Италия'
+);
+insert into ASSIGNEE (NUM_COUNTRY, DATE_CHANGE_NAME, NAME_COUNTRY)
+values (
+  9, 
+  '01-01-1992', 
+  'Саудовская Аравия'
+);
+insert into ASSIGNEE (NUM_COUNTRY, DATE_CHANGE_NAME, NAME_COUNTRY)
+values (
+  10, 
+  '01-01-1992', 
+  'Иран'
+);
+insert into ASSIGNEE (NUM_COUNTRY, DATE_CHANGE_NAME, NAME_COUNTRY)
+values (
+  11, 
+  '01-01-1992', 
+  'Люксембург'
+);
+insert into ASSIGNEE (NUM_COUNTRY, DATE_CHANGE_NAME, NAME_COUNTRY)
+values (
+  12, 
+  '01-01-1992', 
+  'Япония'
+);
+insert into ASSIGNEE (NUM_COUNTRY, DATE_CHANGE_NAME, NAME_COUNTRY)
+values (
+  14, 
+  '01-01-1992', 
+  'Индия'
+);
+insert into ASSIGNEE (NUM_COUNTRY, DATE_CHANGE_NAME, NAME_COUNTRY)
+values (
+  15, 
+  '01-01-1992', 
+  'Израиль'
+);
+insert into ASSIGNEE (NUM_COUNTRY, DATE_CHANGE_NAME, NAME_COUNTRY)
+values (
+  16, 
+  '01-01-1992', 
+  'КНДР'
+);
+insert into ASSIGNEE (NUM_COUNTRY, DATE_CHANGE_NAME, NAME_COUNTRY)
+values (
+  17, 
+  '01-01-1992', 
+  'Бразилия'
+);
+insert into ASSIGNEE (NUM_COUNTRY, DATE_CHANGE_NAME, NAME_COUNTRY)
+values (
+  18, 
+  '01-01-1992', 
+  'Австралия'
+);
+insert into ASSIGNEE (NUM_COUNTRY, DATE_CHANGE_NAME, NAME_COUNTRY)
+values (
+  19, 
+  '01-01-1992', 
+  'ЕС'
+);
+
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  1, 
+  2, 
+  21, 
+  1, 
+  '06-12-1957', 
+  '16:45:00'
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  2, 
+  2, 
+  19, 
+  2, 
+  '04-01-1958', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  3, 
+  2, 
+  23, 
+  1, 
+  '05-02-1958', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  4, 
+  2, 
+  32, 
+  3, 
+  '31-08-1998', 
+  '3:07:00'
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  8, 
+  2, 
+  34, 
+  1, 
+  '05-06-1964', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  5, 
+  2, 
+  33, 
+  1, 
+  '02-11-1997', 
+  '12:25:00'
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  9, 
+  2, 
+  35, 
+  6, 
+  '28-11-1966', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  10, 
+  2, 
+  35, 
+  1, 
+  '28-11-1966', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  6, 
+  1, 
+  19, 
+  4, 
+  '04-10-1957', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  7, 
+  1, 
+  20, 
+  4, 
+  '03-11-1957', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  11, 
+  2, 
+  36, 
+  4, 
+  '28-11-1966', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  12, 
+  2, 
+  36, 
+  7, 
+  '30-11-1966', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  13, 
+  2, 
+  37, 
+  4, 
+  '29-11-1967', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  14, 
+  2, 
+  38, 
+  4, 
+  '02-01-1959', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  15, 
+  1, 
+  38, 
+  8, 
+  '04-01-1959', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  16, 
+  2, 
+  39, 
+  4, 
+  '12-09-1959', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  17, 
+  3, 
+  39, 
+  9, 
+  '13-09-1959', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  18, 
+  2, 
+  40, 
+  4, 
+  '04-01-1963', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  19, 
+  3, 
+  40, 
+  8, 
+  '04-01-1963', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  20, 
+  3, 
+  40, 
+  2, 
+  '05-01-1963', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  21, 
+  2, 
+  41, 
+  4, 
+  '02-04-1963', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  22, 
+  3, 
+  41, 
+  10, 
+  '05-04-1963', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  23, 
+  2, 
+  42, 
+  4, 
+  '09-05-1965', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  24, 
+  2, 
+  42, 
+  11, 
+  '12-05-1965', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  25, 
+  2, 
+  43, 
+  4, 
+  '31-03-1966', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  26, 
+  3, 
+  43, 
+  4, 
+  '03-04-1966', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  27, 
+  3, 
+  43, 
+  9, 
+  '29-05-1966', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  28, 
+  2, 
+  44, 
+  4, 
+  '12-09-1970', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  29, 
+  2, 
+  44, 
+  4, 
+  '13-09-1970', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  30, 
+  3, 
+  44, 
+  4, 
+  '17-09-1970', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  31, 
+  3, 
+  44, 
+  7, 
+  '20-09-1970', 
+  '5:18:00'
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  32, 
+  3, 
+  44, 
+  13, 
+  '21-09-1970', 
+  '7:43:00'
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  33, 
+  2, 
+  44, 
+  7, 
+  '24-09-1970', 
+  '5:26:00'
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  34, 
+  2, 
+  20, 
+  2, 
+  '14-04-1958', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  35, 
+  2, 
+  22, 
+  2, 
+  '31-03-1970', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  36, 
+  2, 
+  24, 
+  2, 
+  '28-06-1958', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  37, 
+  2, 
+  28, 
+  2, 
+  '14-10-1967', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  38, 
+  2, 
+  30, 
+  2, 
+  '20-05-1981', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  39, 
+  2, 
+  31, 
+  2, 
+  '14-01-1989', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  40, 
+  2, 
+  45, 
+  1, 
+  '28-07-1960', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  41, 
+  2, 
+  46, 
+  7, 
+  '20-08-1960', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  42, 
+  2, 
+  47, 
+  14, 
+  '02-12-1960', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  43, 
+  1, 
+  48, 
+  1, 
+  '22-12-1960', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  44, 
+  2, 
+  49, 
+  7, 
+  '09-03-1961', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  45, 
+  2, 
+  50, 
+  7, 
+  '25-03-1961', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  46, 
+  2, 
+  51, 
+  15, 
+  '29-11-1961', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  47, 
+  2, 
+  52, 
+  15, 
+  '16-03-1966', 
+  null
+);
+insert into HISTORY_SPACE_VEHICLE (
+  NUM_HISTORY_SPACE_VEHICLE,
+  NUM_HEAVENLY_BODY,
+  NUM_SPACE_VEHICLE,
+  TYPE_EVENT,
+  DATE_HISTORY_SPACE_VEHICLE,
+  TIME_HISTORY_SPACE_VEHICLE
+)
+values (
+  48, 
+  2, 
+  14, 
+  7, 
+  '20-09-2000', 
+  '7:56:48'
+);
+
+insert into SPACE_FLIGHT (
+  NUM_SPACE_FLIGHT,
+  NUM_SPACE_VEHICLE,
+  NUM_ASTRONAUT,
+  NUM_STATUS,
+  FLIGHT_ENDURANCE
+)
+values (
+  1, 
+  20, 
+  1, 
+  1, 
+  null
+);
+insert into SPACE_FLIGHT (
+  NUM_SPACE_FLIGHT,
+  NUM_SPACE_VEHICLE,
+  NUM_ASTRONAUT,
+  NUM_STATUS,
+  FLIGHT_ENDURANCE
+)
+values (
+  2, 
+  45, 
+  2, 
+  1, 
+  null
+);
+insert into SPACE_FLIGHT (
+  NUM_SPACE_FLIGHT,
+  NUM_SPACE_VEHICLE,
+  NUM_ASTRONAUT,
+  NUM_STATUS,
+  FLIGHT_ENDURANCE
+)
+values (
+  3, 
+  45, 
+  3, 
+  1, 
+  null
+);
+insert into SPACE_FLIGHT (
+  NUM_SPACE_FLIGHT,
+  NUM_SPACE_VEHICLE,
+  NUM_ASTRONAUT,
+  NUM_STATUS,
+  FLIGHT_ENDURANCE
+)
+values (
+  5, 
+  46, 
+  4, 
+  1, 
+  null
+);
+insert into SPACE_FLIGHT (
+  NUM_SPACE_FLIGHT,
+  NUM_SPACE_VEHICLE,
+  NUM_ASTRONAUT,
+  NUM_STATUS,
+  FLIGHT_ENDURANCE
+)
+values (
+  6, 
+  46, 
+  5, 
+  1, 
+  null
+);
+insert into SPACE_FLIGHT (
+  NUM_SPACE_FLIGHT,
+  NUM_SPACE_VEHICLE,
+  NUM_ASTRONAUT,
+  NUM_STATUS,
+  FLIGHT_ENDURANCE
+)
+values (
+  7, 
+  47, 
+  6, 
+  1, 
+  null
+);
+insert into SPACE_FLIGHT (
+  NUM_SPACE_FLIGHT,
+  NUM_SPACE_VEHICLE,
+  NUM_ASTRONAUT,
+  NUM_STATUS,
+  FLIGHT_ENDURANCE
+)
+values (
+  8, 
+  47, 
+  7, 
+  1, 
+  null
+);
+insert into SPACE_FLIGHT (
+  NUM_SPACE_FLIGHT,
+  NUM_SPACE_VEHICLE,
+  NUM_ASTRONAUT,
+  NUM_STATUS,
+  FLIGHT_ENDURANCE
+)
+values (
+  9, 
+  48, 
+  8, 
+  1, 
+  null
+);
+insert into SPACE_FLIGHT (
+  NUM_SPACE_FLIGHT,
+  NUM_SPACE_VEHICLE,
+  NUM_ASTRONAUT,
+  NUM_STATUS,
+  FLIGHT_ENDURANCE
+)
+values (
+  10, 
+  48, 
+  9, 
+  1, 
+  null
+);
+insert into SPACE_FLIGHT (
+  NUM_SPACE_FLIGHT,
+  NUM_SPACE_VEHICLE,
+  NUM_ASTRONAUT,
+  NUM_STATUS,
+  FLIGHT_ENDURANCE
+)
+values (
+  11, 
+  49, 
+  10, 
+  1, 
+  null
+);
+insert into SPACE_FLIGHT (
+  NUM_SPACE_FLIGHT,
+  NUM_SPACE_VEHICLE,
+  NUM_ASTRONAUT,
+  NUM_STATUS,
+  FLIGHT_ENDURANCE
+)
+values (
+  12, 
+  50, 
+  11, 
+  1, 
+  null
+);
+insert into SPACE_FLIGHT (
+  NUM_SPACE_FLIGHT,
+  NUM_SPACE_VEHICLE,
+  NUM_ASTRONAUT,
+  NUM_STATUS,
+  FLIGHT_ENDURANCE
+)
+values (
+  13, 
+  51, 
+  12, 
+  1, 
+  null
+);
+insert into SPACE_FLIGHT (
+  NUM_SPACE_FLIGHT,
+  NUM_SPACE_VEHICLE,
+  NUM_ASTRONAUT,
+  NUM_STATUS,
+  FLIGHT_ENDURANCE
+)
+values (
+  14, 
+  52, 
+  13, 
+  2, 
+  null
+);
+insert into SPACE_FLIGHT (
+  NUM_SPACE_FLIGHT,
+  NUM_SPACE_VEHICLE,
+  NUM_ASTRONAUT,
+  NUM_STATUS,
+  FLIGHT_ENDURANCE
+)
+values (
+  15, 
+  52, 
+  14, 
+  1, 
+  null
+);
+insert into SPACE_FLIGHT (
+  NUM_SPACE_FLIGHT,
+  NUM_SPACE_VEHICLE,
+  NUM_ASTRONAUT,
+  NUM_STATUS,
+  FLIGHT_ENDURANCE
+)
+values (
+  17, 
+  14, 
+  15, 
+  3, 
+  null
+);
+insert into SPACE_FLIGHT (
+  NUM_SPACE_FLIGHT,
+  NUM_SPACE_VEHICLE,
+  NUM_ASTRONAUT,
+  NUM_STATUS,
+  FLIGHT_ENDURANCE
+)
+values (
+  18, 
+  14, 
+  16, 
+  4, 
+  null
+);
+insert into SPACE_FLIGHT (
+  NUM_SPACE_FLIGHT,
+  NUM_SPACE_VEHICLE,
+  NUM_ASTRONAUT,
+  NUM_STATUS,
+  FLIGHT_ENDURANCE
+)
+values (
+  19, 
+  14, 
+  17, 
+  5, 
+  null
+);
+insert into SPACE_FLIGHT (
+  NUM_SPACE_FLIGHT,
+  NUM_SPACE_VEHICLE,
+  NUM_ASTRONAUT,
+  NUM_STATUS,
+  FLIGHT_ENDURANCE
+)
+values (
+  20, 
+  14, 
+  18, 
+  5, 
+  null
+);
+insert into SPACE_FLIGHT (
+  NUM_SPACE_FLIGHT,
+  NUM_SPACE_VEHICLE,
+  NUM_ASTRONAUT,
+  NUM_STATUS,
+  FLIGHT_ENDURANCE
+)
+values (
+  21, 
+  14, 
+  19, 
+  5, 
+  null
+);
+insert into SPACE_FLIGHT (
+  NUM_SPACE_FLIGHT,
+  NUM_SPACE_VEHICLE,
+  NUM_ASTRONAUT,
+  NUM_STATUS,
+  FLIGHT_ENDURANCE
+)
+values (
+  22, 
+  14, 
+  20, 
+  5, 
+  null
+);
+insert into SPACE_FLIGHT (
+  NUM_SPACE_FLIGHT,
+  NUM_SPACE_VEHICLE,
+  NUM_ASTRONAUT,
+  NUM_STATUS,
+  FLIGHT_ENDURANCE
+)
+values (
+  23, 
+  14, 
+  21, 
+  5, 
+  null
+);
