@@ -98,9 +98,49 @@ ORDER BY num_type_space_flight
 SELECT * FROM space_vehicle
 
 --10.	Найти номера КА, которые побывали на орбите земли и солнца. (стандартный)
-SELECT * FROM history_space_vehicle
-FULL JOIN heavenly_body ON history_space_vehicle.num_heavenly_body = heavenly_body.num_heavenly_body
-FULL JOIN type_event ON history_space_vehicle.type_event =type_event.type_event
+SELECT history_space_vehicle.num_space_vehicle, history_space_vehicle.num_heavenly_body,
+heavenly_body.name_heavenly_body
+FROM history_space_vehicle
+INNER JOIN heavenly_body ON history_space_vehicle.num_heavenly_body = heavenly_body.num_heavenly_body
+WHERE heavenly_body.name_heavenly_body = 'земля' OR heavenly_body.name_heavenly_body = 'солнце'
+ORDER BY history_space_vehicle.num_space_vehicle
 
-11.	Напишите пару пользовательских функций, которые получают строку (по умолчанию поставьте 8000 символов), и возвращает строку в верхнем и нижнем регистре. (стандартный) 
-12.	Напишите пользовательскую функцию, которая получает три параметра типа float, и возвращает второй параметр если первый строго больше нуля, а третий в остальных случаях. (стандартный) 
+--11.	Напишите пару пользовательских функций, которые получают строку (по умолчанию поставьте 8000 символов), 
+--и возвращает строку в верхнем и нижнем регистре. (стандартный) 
+CREATE OR REPLACE FUNCTION upper_text(smth text)
+RETURNS text AS $$
+	BEGIN
+		RETURN upper(smth) AS result_t;
+     END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM upper_text('HeLoMyFrIeNd');
+
+DROP FUNCTION lower_and_upper(text)
+
+CREATE OR REPLACE FUNCTION lower_text(smth text)
+RETURNS text AS $$
+	BEGIN
+		RETURN lower(smth) AS result_t;
+     END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM lower_text('HeLoMyFrIeNd');
+SELECT * FROM upper_text('HeLoMyFrIeNd');
+
+--12. Напишите пользовательскую функцию, которая получает три параметра типа float, 
+--и возвращает второй параметр если первый строго больше нуля, а третий в остальных случаях. (стандартный) 
+CREATE OR REPLACE FUNCTION my_func(one real, two real, three real)
+RETURNS real AS $$
+BEGIN
+	IF one > 0
+	THEN
+    	RETURN two;
+	ELSE 
+		RETURN three;
+	END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM my_func(2.2, 0.3, 5.45);
+SELECT * FROM my_func(-0.8, 0.3, 5.45);
