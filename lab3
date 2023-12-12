@@ -14,13 +14,93 @@ ORDER BY space_vehicle.num_space_vehicle, history_space_vehicle.date_history_spa
 
 SELECT * FROM history_space_vehicle
 SELECT * FROM type_event
-3.	Для каждого космонавта человека указать имя КА, и должность, в которой он произвел полет. (стандартный) 
-4.	Для всех КА, указать краткое название страны, название космодрома, ракету носитель, название типа КА, порядковый номер, и указать название и дату события выведение на орбиту. (стандартный) 
+--3.	Для каждого космонавта человека указать имя КА, и должность, в которой он произвел полет. (стандартный)
+SELECT astronaut.num_astronaut, space_vehicle.name_space_vehicle, status.name_status
+FROM astronaut
+INNER JOIN space_flight ON astronaut.num_astronaut = space_flight.num_astronaut
+INNER JOIN space_vehicle ON space_vehicle.num_space_vehicle = space_flight.num_space_vehicle
+INNER JOIN status ON status.num_status = space_flight.num_status
+WHERE astronaut.num_species = 1
+
+SELECT * FROM species
+SELECT * FROM status
+SELECT * FROM space_flight
+--4.	Для всех КА, указать краткое название страны, название космодрома, ракету носитель, название типа КА, 
+--порядковый номер, и указать название и дату события выведение на орбиту. (стандартный) 
+SELECT space_vehicle.num_space_vehicle, space_vehicle.sequence_number, country.short_name_country, cosmodrome.name_cosmodrom, carrier_rocket.name_carrier_rocket, 
+type_space_flight.num_type_space_flight, history_space_vehicle.date_history_space_vehicle, type_event.name_type_event
+FROM space_vehicle
+LEFT JOIN country ON space_vehicle.num_country = country.num_country
+LEFT JOIN cosmodrome ON space_vehicle.num_cosmodrome = cosmodrome.num_cosmodrome
+LEFT JOIN carrier_rocket ON space_vehicle.num_carrier_rocket = carrier_rocket.num_carrier_rocket
+LEFT JOIN type_space_flight ON space_vehicle.num_type_space_flight = type_space_flight.num_type_space_flight
+LEFT JOIN history_space_vehicle ON space_vehicle.num_space_vehicle = history_space_vehicle.num_space_vehicle
+LEFT JOIN type_event ON history_space_vehicle.type_event = type_event.type_event
+ORDER BY space_vehicle.num_space_vehicle
+
 5.	Для предыдущего запроса, в случае неуспешного выведения дату и название оставить неопределенными. (стандартный) 
-6.	Для предыдущего запроса, в случае неуспешного выведения, дату установить в нео пределенное значение, а название события установить в "не вышел в космос". (сложный) 
-7.	Вывести пары названий космических тел, связанных по условию первое тело является спутником второго тела, для тел для которых неизвестно спутником кого они являются, установить название в неопределенное значение. (простой) 
-8.	Выдать все пары номеров типов КА и РН, таких, что данный тип КА не выводился на орбиту с использованием РН (номер РН установить в null), и наоборот (номер типа КА установить в null). В результате обязательно должна присутствовать строка из пары null значений. (сложный) 
-9.	Найдите типы КА которые выводила только одна страна. (стандартный) 
-10.	Найти номера КА, которые побывали на орбите земли и солнца. (стандартный) 
+
+--6.Для предыдущего запроса, в случае неуспешного выведения, дату установить в неопределенное значение, 
+--а название события установить в "не вышел в космос". (сложный) 
+CREATE TEMP TABLE new_table AS
+SELECT space_vehicle.num_space_vehicle, space_vehicle.sequence_number, country.short_name_country, cosmodrome.name_cosmodrom, carrier_rocket.name_carrier_rocket, 
+type_space_flight.num_type_space_flight, history_space_vehicle.date_history_space_vehicle, type_event.name_type_event
+FROM space_vehicle
+LEFT JOIN country ON space_vehicle.num_country = country.num_country
+LEFT JOIN cosmodrome ON space_vehicle.num_cosmodrome = cosmodrome.num_cosmodrome
+LEFT JOIN carrier_rocket ON space_vehicle.num_carrier_rocket = carrier_rocket.num_carrier_rocket
+LEFT JOIN type_space_flight ON space_vehicle.num_type_space_flight = type_space_flight.num_type_space_flight
+LEFT JOIN history_space_vehicle ON space_vehicle.num_space_vehicle = history_space_vehicle.num_space_vehicle
+LEFT JOIN type_event ON history_space_vehicle.type_event = type_event.type_event
+ORDER BY space_vehicle.num_space_vehicle;
+
+UPDATE new_table
+SET name_type_event = 'не вышел в космос'
+WHERE date_history_space_vehicle IS NULL;
+
+SELECT * FROM new_table
+ORDER BY num_space_vehicle;
+
+--7.Вывести пары названий космических тел, связанных по условию первое тело является спутником второго тела, 
+--для тел для которых неизвестно спутником кого они являются, установить название в неопределенное значение. (простой)
+SELECT heavenly_body.num_heavenly_body, heavenly_body.name_heavenly_body AS sputnik, heavenly_body.satellite, new_table2.name_heavenly_body
+FROM heavenly_body
+LEFT JOIN new_table2 ON new_table2.num_heavenly_body = heavenly_body.satellite
+
+CREATE TEMP TABLE new_table2 AS
+SELECT * FROM heavenly_body
+
+SELECT * FROM heavenly_body
+--8.	Выдать все пары номеров типов КА и РН, таких, что данный тип КА не выводился на орбиту с использованием РН (номер РН установить в null), 
+--и наоборот (номер типа КА установить в null). В результате обязательно должна присутствовать строка из пары null значений. (сложный) 
+SELECT  space_flight.num_space_flight, space_flight.num_space_vehicle, space_vehicle.num_space_vehicle, carrier_rocket.num_carrier_rocket
+FROM space_flight
+RIGHT JOIN space_vehicle ON space_flight.num_space_vehicle = space_vehicle.num_space_vehicle
+RIGHT JOIN carrier_rocket ON space_vehicle.num_carrier_rocket = carrier_rocket.num_carrier_rocket
+ORDER BY space_vehicle.num_space_vehicle
+
+--9.	Найдите типы КА которые выводила только одна страна. (стандартный) 
+CREATE TEMP TABLE new_table3 AS
+SELECT space_vehicle.num_type_space_flight, space_vehicle.num_country, country.short_name_country, count (space_vehicle.num_country)
+FROM space_vehicle
+INNER JOIN country ON country.num_country = space_vehicle.num_country
+GROUP BY space_vehicle.num_type_space_flight, space_vehicle.num_country, country.short_name_country
+ORDER BY space_vehicle.num_type_space_flight
+
+SELECT * FROM new_table3
+
+SELECT num_type_space_flight, COUNT(num_type_space_flight)
+FROM new_table3
+GROUP BY num_type_space_flight
+HAVING COUNT(num_type_space_flight) = 1
+ORDER BY num_type_space_flight
+
+SELECT * FROM space_vehicle
+
+--10.	Найти номера КА, которые побывали на орбите земли и солнца. (стандартный)
+SELECT * FROM history_space_vehicle
+FULL JOIN heavenly_body ON history_space_vehicle.num_heavenly_body = heavenly_body.num_heavenly_body
+FULL JOIN type_event ON history_space_vehicle.type_event =type_event.type_event
+
 11.	Напишите пару пользовательских функций, которые получают строку (по умолчанию поставьте 8000 символов), и возвращает строку в верхнем и нижнем регистре. (стандартный) 
 12.	Напишите пользовательскую функцию, которая получает три параметра типа float, и возвращает второй параметр если первый строго больше нуля, а третий в остальных случаях. (стандартный) 
