@@ -1,0 +1,131 @@
+CREATE TYPE "sex_type" AS ENUM (
+  'M',
+  'F',
+  'Other'
+);
+
+CREATE TABLE "nutritionist" (
+  "nutritionist_id" bigserial PRIMARY KEY,
+  "name" varchar(50),
+  "surname" varchar(50),
+  "patronym" varchar(50),
+  "email" char(254),
+  "telnum" varchar(15)
+);
+
+CREATE TABLE "client_card" (
+  "card_id" bigserial PRIMARY KEY,
+  "card_number" varchar,
+  "client_name" varchar(50),
+  "client_surname" varchar(50),
+  "client_patronym" varchar(50),
+  "age" smallint,
+  "weight" numeric(3,2),
+  "height" numeric(3,2),
+  "sex" sex_type
+);
+
+CREATE TABLE "consultation" (
+  "consultation_id" bigserial PRIMARY KEY,
+  "consultation_date" date,
+  "consultation_time" time,
+  "place" text,
+  "duration" integer,
+  "consultation_number" integer
+);
+
+CREATE TABLE "contact" (
+  "contact_id" bigserial PRIMARY KEY,
+  "client_email" char(254),
+  "client_telnum" varchar(15),
+  "messenger_type" varchar(30),
+  "messenger_link" varchar(100)
+);
+
+CREATE TABLE "biomarker" (
+  "biomarker_id" bigserial PRIMARY KEY,
+  "name" varchar(100),
+  "value" numeric(3,2),
+  "clinic_ref_value" numeric(3,2),
+  "nutric_ref_value" numeric(3,2),
+  "units" varchar(8),
+  "date_taken" date
+);
+
+CREATE TABLE "anamnesis" (
+  "anamnesis_id" bigserial PRIMARY KEY,
+  "lifestyle" text,
+  "complaint" text,
+  "desease" text,
+  "nutrition" text,
+  "water_intake" text,
+  "physical_activity" text,
+  "goal" text,
+  "special_state" text,
+  "anamnesis_date" date
+);
+
+CREATE TABLE "document" (
+  "document_id" bigserial PRIMARY KEY,
+  "anamnesis_id" bigserial,
+  "doc_name" varchar(300),
+  "date_create" date,
+  "format" varchar(4),
+  "size" integer
+);
+
+CREATE TABLE "recommendation" (
+  "recommendation_id" bigserial PRIMARY KEY,
+  "date_create" date,
+  "protocol_type" varchar(300),
+  "nutrition_plan" text,
+  "water_intake" text,
+  "physical_activity" text,
+  "lifestyle" text,
+  "stress_management" text,
+  "other_comment" text
+);
+
+CREATE TABLE "supplement" (
+  "supplement_id" bigserial PRIMARY KEY,
+  "name" varchar(300),
+  "dose" varchar(10),
+  "date_prescribed" date
+);
+
+CREATE TABLE "client" (
+  "client_id" bigserial PRIMARY KEY,
+  "contact_id" bigserial,
+  "consultation_id" bigserial,
+  "card_id" bigserial,
+  "nutritionist_id" bigserial
+);
+
+CREATE TABLE "treatment" (
+  "treatment_id" bigserial PRIMARY KEY,
+  "card_id" bigserial,
+  "recommendation_id" bigserial,
+  "anamnesis_id" bigserial,
+  "biomarker_id" bigserial,
+  "supplement_id" bigserial
+);
+
+ALTER TABLE "client" ADD FOREIGN KEY ("nutritionist_id") REFERENCES "nutritionist" ("nutritionist_id");
+
+ALTER TABLE "document" ADD FOREIGN KEY ("anamnesis_id") REFERENCES "anamnesis" ("anamnesis_id");
+
+ALTER TABLE "client" ADD FOREIGN KEY ("card_id") REFERENCES "client_card" ("card_id");
+
+ALTER TABLE "contact" ADD FOREIGN KEY ("contact_id") REFERENCES "client" ("contact_id");
+
+ALTER TABLE "consultation" ADD FOREIGN KEY ("consultation_id") REFERENCES "client" ("consultation_id");
+
+ALTER TABLE "treatment" ADD FOREIGN KEY ("card_id") REFERENCES "client_card" ("card_id");
+
+ALTER TABLE "recommendation" ADD FOREIGN KEY ("recommendation_id") REFERENCES "treatment" ("recommendation_id");
+
+ALTER TABLE "supplement" ADD FOREIGN KEY ("supplement_id") REFERENCES "treatment" ("supplement_id");
+
+ALTER TABLE "anamnesis" ADD FOREIGN KEY ("anamnesis_id") REFERENCES "treatment" ("anamnesis_id");
+
+ALTER TABLE "biomarker" ADD FOREIGN KEY ("biomarker_id") REFERENCES "treatment" ("biomarker_id");
